@@ -17,6 +17,35 @@ function App() {
 export default App;
 
 function Input() {
-  const [Input,setInput] = useState("");
-  return <textarea></textarea>;
+  const [inputData, setInputData] = useState('');
+  const [numberOfWord, setNumberOfWord] = useState(0);
+
+  const onInputChange = (e) => {
+
+    setInputData(e.target.value);
+  };
+
+  useEffect(() => {
+    const count = setTimeout(() => {
+      setNumberOfWord(
+        inputData === true
+          ? inputData.trim().replace(/\s\s+/g, ' ').split(' ').length
+          : 0
+      );
+    }, 500);
+
+    return () => {
+      clearTimeout(count);
+    };
+  }, [inputData]);
+
+  return (
+    <div className='App'>
+      
+        <p>Số chữ: {numberOfWord} </p>
+        <textarea type='text' onChange={onInputChange} value={inputData} />
+      
+    </div>
+  );
+}
 }
